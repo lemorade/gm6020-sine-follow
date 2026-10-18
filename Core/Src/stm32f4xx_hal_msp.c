@@ -35,6 +35,12 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef *hcan)
 
     g.Pin = GPIO_PIN_1;                 /* PD1 = CAN1_TX */
     HAL_GPIO_Init(GPIOD, &g);
+
+    /* 使能 CAN1 RX0 中断：收到电机反馈帧时进入 HAL_CAN_RxFifo0MsgPendingCallback。
+     * 缺这一行会导致报文堆在 FIFO 里没人处理（FMP 满 + 溢出），
+     * 控制任务永远拿不到反馈，看门狗每 0.8s 复位一次。 */
+    HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(CAN1_RX0_IRQn);
 }
 
 void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan)
