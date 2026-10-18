@@ -1,0 +1,21 @@
+# 编译产物（不要上传）
+build/
+build-*/
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+
+# 编辑器
+.vscode/
+.idea/
+*.bak
+*.swp
+
+# 系统
+Thumbs.db
+desktop.ini
+.DS_Store
