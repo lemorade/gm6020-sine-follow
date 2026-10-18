@@ -1,4 +1,4 @@
-#include "ControlTask.h"
+﻿#include "ControlTask.h"
 #include "Gm6020.h"
 #include "Pid.h"
 
@@ -15,8 +15,8 @@
 namespace {
 
 // ---- 正弦曲线 ----
-volatile float g_sine_freq = 0.5f;   // 频率 Hz (速度环/位置环共用)
-volatile float g_vel_amp   = 6.0f;   // 速度正弦幅值 rad/s
+volatile float g_sine_freq = 0.2f;   // 频率 Hz (速度环/位置环共用)
+volatile float g_vel_amp   = 10.0f;   // 速度正弦幅值 rad/s
 volatile float g_pos_amp   = 1.0f;   // 位置正弦幅值 rad
 
 constexpr float kPi      = 3.14159265358979323846f;
@@ -43,7 +43,7 @@ constexpr uint32_t kFeedbackTimeoutMs = 100;
 static Gm6020  g_motor(kMotorId);
 
 // 速度环: 输入速度误差(rad/s), 输出电机电压给定
-static Pid     g_velPid(  1200.0f, 30.0f,  0.0f, kAmpLimit, kMinAmp);
+static Pid     g_velPid(   200.0f, 5000.0f,  0.0f, kAmpLimit, kMinAmp);
 // 位置环: 输入角度误差(rad),   输出目标速度(rad/s), 再由速度环执行
 static Pid     g_posPid(     8.0f,  0.0f,  0.35f,  6.0f,     -6.0f);
 
