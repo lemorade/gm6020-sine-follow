@@ -27,4 +27,21 @@ void MX_GPIO_Init(void)
     g.Pull  = GPIO_NOPULL;
     g.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOD, &g);
+    /* ioc 中配置为 GPIO_Output、默认高电平的引脚（CubeMX 会生成，之前漏掉了）
+     * PA4 / PB0 / PB14 / PB15 —— C 板上可能涉及电源或收发器使能 */
+    g.Mode  = GPIO_MODE_OUTPUT_PP;
+    g.Pull  = GPIO_NOPULL;
+    g.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+    g.Pin = GPIO_PIN_4;
+    HAL_GPIO_Init(GPIOA, &g);
+
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
+    g.Pin = GPIO_PIN_0;
+    HAL_GPIO_Init(GPIOB, &g);
+
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_SET);
+    g.Pin = GPIO_PIN_14 | GPIO_PIN_15;
+    HAL_GPIO_Init(GPIOB, &g);
 }
